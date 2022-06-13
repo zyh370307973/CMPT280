@@ -1,0 +1,547 @@
+<head>
+<style>
+li{
+    margin: 5px 0;
+}
+</style></head>
+<ol>
+<li>
+<ol type="a">
+<li>(3 points) What are the three components that an Abstract Data Type has, regardless of the method of ADT specification used? <em>(Note: not looking for sets, syntax, semantics..." here, those are components of a specific ADT specification method.)</em><br/><br/>
+
+<strong style="color: green">Definition 5.2</strong> An abstract data type consists of:<br/>
+<ul><li>one or more data structures (i.e. a declaration of data);</li>
+<li>a set of publicly known operations on the data structure(s); and</li>
+<li>encapsulation (hiding) of the data structures and the implementation of the operations.</li></ul></li><br/>
+
+<li>
+(5 points) Suppose you are designing data structure for storing a list of legal words to be used in
+a spell-checking application. For each of the following, indicate whether they are decisions that
+should be made at the time of ADT Specification, or ADT Implementation and give a few words
+(no more than one short sentence) of justification each of your answers:<br/>
+<ul>
+
+<li>Decide whether to store the words in a linked list or a trie</li>
+<i style="color: green">Implementation</i> - At time of specification, the ADT is not aware of what data structure will use it
+<li>Decide what characters are allowed to appear in a word</li>
+<s><i style="color: green">Implementation</i> - If this is done in the specification, then the ADT designer has to take into consideration all possible words that can be stored which also will include non English words and unicode characters. Also since the data structure is supposed to store words not characters, this decision should be left till implementation</s><br/>
+The prof has spoken and the correct answer is that it is infact specification for this question and here is the explanation - <i style="color: green">specification</i>
+<p><i style="color: royalblue; font-weight: bold">I would say that this is a specification-time decision. It's really a decision about the "Sets" in the specification; you're defining what a word is, and this is done at specification time. This is where you'd decide: can a word contain both upper-case and lower-case letters or not? Can it include any other symbols, etc. None of this is asking what datatype or what character encoding to use -- these things would be decided at implementation time.</i></p>
+
+<li>Decide whether words are allowed to be deleted from the dictionary</li>
+<i style="color: green">specification</i> - The ADT user should be able to tell from reading the ADT specification if the ADT should support deletion or not
+<li>Decide whether testing for equality of words is case-sensitive</li>
+<i style="color: green">implementation</i> - This decision should be left to implementation because the ADT should be specifying what operations are allowed not how those operations should be carried out
+<li>Decide what language to use to write the spell-checker</li>
+<i style="color: green">Implementation</i> - ADT says what operations are allowed, not how those operations are carried out. Language is an implementation decision.
+</li>
+
+</ol></li>
+
+<li>
+<p>Using the <i>white-box</i> testing method for generating test cases, generate 10 test cases that could be used for regression testing of <b>SimpleList280</b>. The set of 10 tests need not be exhaustive, but should consist of valid, reasonable test cases. Do not write the code for the test cases, just list the test cases, e.g. "test whether <b>isEmpty()</b> returns true when the list is empty".</p>
+<pre>
+public boolean isEmpty ();
+
+public boolean isFull ();
+
+public void clear ();
+
+/** Insert x as the first element in the list .
+@precond ! isFull ()
+@param x item to be inserted in the list */
+public void insertFirst (I x) throws ContainerFull280Exception ;
+
+/** Return the first item .
+@precond ! isEmpty ()
+*/
+public I firstItem () throws ContainerEmpty280Exception ;
+
+/** Delete the first item from the list .
+@precond ! isEmpty ()
+*/
+public void deleteFirst () throws ContainerEmpty280Exception ;
+</pre>
+<h4> white-box tests:</h4>
+<ul>
+<li> test whether the <strong>isEmpty</strong> returns true when nothing has be put into the list </li>
+<li> test whether the <strong>isEmpty</strong> returns false when something has be put into the list </li>
+<li> test whether the <strong>isFull</strong> returns false when the list is empty </li>
+<li> test whether the <strong>isFull</strong> returns false when the number of items in the list is less than than the list's capacity</li>
+<li> test whether the <strong>isFull</strong> returns true when the list is full</li>
+<li> test whether the <strong>isEmpty</strong> returns true after <strong>clear</strong> has been called</li>
+<li> etc... </li>
+</ul>
+</li>
+
+<li>
+(5 points) What are the worst-case time complexities of the following algorithms? Give your answers
+in Big-O notation, and define your variables, e.g. "Binary search is O(log n) where <i>n</i> is the number of
+elements being searched."
+<ul>
+<li>
+QuickSort <i style="color: green">O(n<sup>2</sup>)</i> - Incurs this time when the items in the list are all the same
+</li>
+<li>
+Dijkstra's <s><i style="color: green">O(|E|<b>.</b>|V|)</i> - <i>E</i> is the number of edges and <i>V</i> is the number of vertices.</s><br/>
+After the prof posted his take on this, I had a "D'oh!" moment.
+<p><i style="color: green">O(|E|)</i> <i style="color:royalblue; font-weight:bold;">Dijkstra's original algoirthm, as we did it in class is just O(|E|), not O(|E||V|). I would also accept O(|V|^2) because |E| = |V|^2 in the worst case. It can be made faster with improvements, but this is the answer I would expect based on what we did in class.</i></p>
+
+<p></p>
+</li>
+<li>
+Heapsort <i style="color: green">O(nlogn)</i> - Building the heap costs <i>nlogn</i> time and then building the sorted list of items costs another <i>nlogn</i> => <i>nlogn + nlogn</i> = <i>O(nlogn)</i>
+</li>
+<li>
+Breadth-first search of a graph <s><i style="color: green">O(|V|)</i> - <i>V</i> is the number of vertices in the graph. To visualize this, use the data structure visualizer posted at the course homepage</s>
+<p><i style="color: green">O(|E| + |V|)</i> - <i style="color:royalblue; font-weight:bold;">The time complexity for breadth-first search in the worst case is the same as the time complexity of a breadth first traversal. From the Topic 17 exercise solutions is O(|E| + |V|) for an adjacency list representation or O(|V|^2) for an adjacency matrix representation.</i></p>
+</li>
+<li>
+Searching in a height-balanced tree <i style="color: green">O(h)</i> - <i>h</i> is the height of the tree
+<p>Prof contribution: <i style="color: royalblue; font-weight:bold; font-style:italic;">Searching in a height balanced tree is indeed O(h), but we usually prefer to express these time complexities in terms of the number of items in the container n. Since h = log n, this would result in O(log n).</i></p>
+</li>
+</ul>
+</li>
+
+<li>(10 points) Determine the worst-case time complexity of the following pseudocode algorithm. Assume
+that <b>DoOtherStuff</b> has a time complexity of O(n) where <i>n = r - l</i>. Show all calculations, justify your
+answer.
+<pre>Algorithm DoStuff ( a, l, r )
+    'a' is an array of numbers
+    'l' and 'r' are positive integers between 0 and (a.length -1)
+    int m = ( l + r ) / 2;
+    if( l &lt; r )
+        DoStuff (a, l, m)
+        DoStuff (a, m+1, r)
+        DoOtherStuff (a,l,m,r)
+</pre>
+<h4><i>Some of you mathematically gifted can show us a formula that arrives at the answer for this one.</i></h4>
+
+<blockquote><i style="font-weight: bold; color: cadetblue;">Alex says: </i>We are given that DoOtherStuff() has complexity O(n) where n = r - l.<br/><br/>
+
+We know that the range of the while loop has min L and max R. provided at the initial function call. From this we deduce that the number of integers in this range is R - L.<br/><br/>
+
+Let us look at each individual recursive call separately first:<br/><br/>
+
+The first call recursively keeps L static and R decreases by a factor of 2 each time. In fact the maximum length of this recursive chain is log<sub>2</sub>(R - L). Similarly the second call holds R static and L increases by a factor of 2 each time - the maximum length of this chain is also log<sub>2</sub>(R-L).<br/><br/>
+
+So now the active operation is executed with each recursive call so we have O(2log<sub>2</sub>(R - L)(R - L)). But we know that n = R - L, therefore we can write O(2nlog<sub>2</sub>n) which dropping the coefficient becomes O(nlog<sub>2</sub>n).</blockquote>
+
+We can show a different algorithm that does the same thing as the above:
+<pre>Algorithm tree_postorder ( a, l, r )
+    int m = ( l + r ) / 2;
+    if( l &lt; r )
+        tree_postorder (a, l, m) // visit left sub-tree
+        tree_postorder (a, m+1, r) // visit right sub-tree
+        visit(m) // visit the root
+</pre>
+
+<s>We know that tree traversals cost <i>O(n)</i>. Why? Because the visit operation is <i>O(1)</i>. But in this case, the visit operation costs <i>O(n)</i> and happens <i>n</i> times. Therefore we can conclude that the above algorithm costs <i style="color: green">O(n<sup>2</sup>)</i>. A simple proof will then be to show by induction that if the visit operation visits all nodes in small tree of say size 10, therefore it must do the same for large <i>n</i>.</s>
+
+<p>Prof contribution: <i style="color: royalblue; font-weight:bold; font-style:italic;">This is Merge Sort in disguise. The calls to DoStuff() processe arrays that are half as long with each recursive call, thus the amount of work done at each level of the recursion tree is O(n) for the calls to DoStuff() plus O(n) for the call to DoOtherStuff (i.e. the merge operation!). Since we divide sequences in half, the depth of the recursion tree is O(log n). We do O(n) work at each of the O(log n) levels, so the total cost is O(n log n).</i></p>
+
+</li>
+<li>
+(10 points) Dijkstras algorithm is a graph algorithm to determine the shortest path from a specified vertex to every other vertex in a weighted graph. Recall that it builds a tree of shortest paths (<i>minimum spanning tree</i>) from the specified vertex one edge at a time. For the graph below with specified <b>start vertex E</b>, give the <b>edges</b> (pairs of vertices!) added to the shortest path tree in the order that Dijkstras algorithm adds them to
+the tree.
+
+<center><img src="http://i62.tinypic.com/15y6hrb.png" alt="Dijkstra-algo"></img></center>
+
+<pre>Queue[<b>(E -> E)</b> 0]
+pop <b>(E -> E) 0</b> => Queue[<b>(E -> B)</b> 1, <b>(E -> F)</b> 2, <b>(E -> G)</b> 4, <b>(E -> D)</b> 10]
+pop <b>(E -> B) 1</b> => Queue[(E -> F) 2, <b>(B -> A)</b> 3, (E -> G) 4, (E -> D) 10]
+pop <b>(E -> F) 2</b> => Queue[(B -> A) 3, (E -> G) 4, <b>(F -> H)</b> 8, (E -> D) 10]
+pop <b>(B -> A) 3</b> => Queue[(E -> G) 4, (F -> H) 8, <b>(A -> C)</b> 8, (E -> D) 10]
+pop <b>(E -> G) 4</b> => Queue[<b>(G -> C)</b> 6, (F -> H) 8, <b>(G -> D)</b> 9]
+pop <b>(G -> C) 6</b> => Queue[(F -> H) 8, (G -> D) 9]
+pop <b>(F -> H) 8</b> => Queue[(G -> D) 9]
+pop <b>(G -> D) 9</b> => Queue[]
+
+Order is [(E -> E), (E -> B), (E -> F), (B -> A), (E -> G), (G -> C), (F -> H),(G -> D)]
+</pre>
+</li>
+
+<li>
+(6 points) Give two different possible breadth-first search trees that might be obtained by a breadth first search of the following unweighted graph starting at vertex F.
+
+<center><img src="http://i60.tinypic.com/263fo5x.png" alt="Graph" /></center>
+<pre>[F, E, G, H, B, D, C, A]
+[F, G, E, H, D, C, B, A]</pre>
+</li>
+
+<li>
+<p>
+Consider the following problem: given an undirected weighted graph G with a single connected component (the graph is connected), and the set of edges with the smallest total cost which, if removed from the graph, results in a graph that is no longer connected. This problem is called <i>minimum cut</i>.</p>
+<ol type='a'>
+<li>(5 points) Give a greedy, polynomial-time pseudocode algorithm that tries to find the minimum cut, but doesn't guarantee the optimum cut, and runs in polynomial time.</li>
+<pre>
+Algorithm speculating_mincut (UG)
+    """
+    UG is an undirected graph
+    """
+    Uf = new UnionFind(UG)
+    Heap = new MinHeap(UG.edges())
+
+    while Uf.isConnected() and not (Heap.isEmpty())
+        small = Heap.removeMin();
+        UG.remove(small)
+</pre>
+<p>Prof contribution: <i style="color: royalblue; font-weight:bold; font-style:italic;">on the right track. The essential idea here is to remove the cheapest edge until the graph is no longer connected. The sum of the weights of the removed edges is the value of the (estimated) min cut.</i></p>
+
+<li><p>(5 points) Give an exponential-time backtracking pseudocode algorithm that is guaranteed to find the minimum cut.</p>
+
+<i style="font-weight: bold; color: cadetblue;">Alex's Solution</i>
+<pre>
+<b>mincut</b>(G):
+<b>"""</b>
+<b>G</b> is a graph
+<b>edgesCut</b> is the set of edges that are cut
+<b>edges</b> is the set of all edges in the graph
+<b>bestValue</b> is the best solution found so far
+<b>"""</b>
+    bestValue = infinity
+    edges = G.edges
+    edgesCut = &lt;>
+    mincut_helper(G, 0, 0)
+
+<b>mincut_helper</b>(G, currEdge, currValue):
+<b>"""</b>
+<b>G</b> is a graph
+<b>currEdge</b> is an integer value for the current edge being considered
+<b>currValue</b> is the current value of the cuts
+"""
+if (currEdge = G.numEdges):
+    if (!G.isConnected):
+        if currValue &lt; bestValue:
+            bestValue = currValue
+else:
+    if currValue + weight(edges[currEdge]) &lt; bestValue:
+        // first try the universe where we keep the current edge
+        mincut_helper(G, currEdge+1, currValue)
+        // now try the universe where we cut the current edge
+        edgesCut += edges[currEdge]
+                G &lt;- remove edges in edgesCut
+                mincut_helper(G, currEdge+1, currValue + weight(edges[currEdge]))
+        else:
+                mincut_helper(G, currEdge+1, currValue)
+</pre>
+
+<i style="font-weight: bold; color: cadetblue;">Slight modification of the above solution</i>
+<pre>
+<b>mincut</b>(G):
+<b>"""</b>
+<b>G</b> is a graph
+<b>edgesCut</b> is the set of edges that are cut
+<b>edges</b> is the set of all edges in the graph
+<b>bestValue</b> is the best solution found so far
+<b>"""</b>
+    bestValue = infinity
+    edges = G.edges
+    edgesCut = &lt;>
+    mincut_helper(G, 0, 0)
+
+<b>mincut_helper</b>(G, currEdge, currValue):
+<b>"""</b>
+<b>G</b> is a graph
+<b>currEdge</b> is an integer value for the current edge being considered
+<b>currValue</b> is the current value of the cuts
+"""
+if !G.isConnected:
+    if currValue &lt; bestValue:
+    bestValue = currValue
+else if currValue + weight(edges[currEdge]) &lt; bestValue:
+        // only add this edge to the current value of cuts if it will not
+        // make the cut worse
+        currValue += weight(edges[currEdge])
+        // iterate over all the other edges that are not yet cut from
+        // the graph
+        for edge in (edges - edgesCut):
+            // add this edge to the cut set
+            edgesCut += edges[edge]
+            G &lt;- remove <i>edge</i> from the graph
+            mincut_helper(G, edge, currValue + weight(G.edges[edge])
+            // remove this edge from the cut set
+            edgesCut -= edges[currEdge]
+            G &lt;- add <i>edge</i> to the graph
+</pre>
+</li>
+</ol>
+</li>
+
+<li>
+<p>(10 points) Suppose you are implementing a 2d-tree (a kd-tree that stores 2D points) where the nodes of the tree store objects of type Pair280. Assume that a KDTree object is implemented as a linked tree of KDNode objects, each storing a Pair280 object and references to its left and right children. Give the java code, including javadoc comments, for a recursive method for performing a range search on the tree. You may use classes from the Java API or lib280 for storing the points that are found to be in range.</p>
+
+One possible implementation:
+<pre>
+List&lt;KDNode> rangeSearch(KDTree tree, KDNode l, KDNode r, int lvl, int maxDegree) {
+
+    // Don't search if the tree is empty
+    if (tree == null)
+        return new ArrayList&lt;>();
+
+    // Grab the rootNode of this tree
+    KDNode nodeRoot = tree.rootNode;
+    
+    // First thing we want to do is get rid of infeasible paths
+
+    if (nodeRoot.leftOf(l, lvl))
+        return rangeSearch(tree.rightSubTree, l, r, ++lvl % maxDegree, maxDegree);
+
+    else if (nodeRoot.rightOf(r, lvl))
+        return rangeSearch(tree.leftSubTree, l, r, ++lvl % maxDegree, maxDegree);
+
+    List&lt;KDNode> left = rangeSearch(tree.leftSubTree, l, r, ++lvl % maxDegree,
+                                        maxDegree);
+    List&lt;KDNode> right = rangeSearch(tree.rightSubTree, l, r, ++lvl % maxDegree,
+                                         maxDegree);
+
+    left.addAll(right);
+    List&lt;KDNode> list = new ArrayList&lt;>(left);
+   
+    // Assuming the KDNode class has a public method that checks if a point
+    // lies between 2 other points
+    if (nodeRoot.isBetween(l, r)) {
+        list.add(nodeRoot);
+    }
+    
+    return list;
+}
+</pre>
+</li>
+
+<li>
+<p>(10 points) Consider the following <i>height-balanced</i> tree. For each of the operations below, apply the operations to the <b>original</b> tree pictured here, and draw the resulting tree.</p>
+
+<center><img src="http://i59.tinypic.com/30rnuxt.png" alt="BinaryTree" /></center>
+<ul>
+<li>Insert 72
+<pre>
+           35
+        /       \
+    14            63
+   /  \          /   \
+12      22    43       73
+            /    \    /   \
+           36    55  72   99
+</pre>
+</li>
+
+<li>delete 99, then delete 73
+<pre>
+           35
+        /       \
+    14            63
+   /  \          /   \
+12      22    43       72
+            /    \
+           36    55 
+</pre>
+
+<li>Insert 5, then insert 8
+<pre>
+            35                                   35  
+        /       \                            /       \
+      14         63                        14         63
+     /  \       /   \                     /  \       /   \
+   12    22    43    72         =>       8    22    43    72
+  /          /   \                      / \        /  \
+ 5          36   55                    5   12     36  55
+  \
+   8
+
+</pre>
+</li>
+
+<li>Insert 40
+<pre>
+          35                                    35
+       /      \                              /      \
+    14         63                          14         43
+   /  \       /   \                       /  \      /    \
+  8    22    43    72            =>      8    22   36     63
+ / \        /  \                        / \          \   /  \
+5   12     36  55                      5  12         40  55  72
+            \
+             40
+
+</pre>
+</li>
+
+<li>Delete 55
+<pre>
+          35
+       /      \
+    14         43
+   /  \       /   \
+  8    22   36     63
+ / \          \      \
+5  12         40     72
+
+</pre>
+</li>
+</ul>
+</li>
+
+<p>Prof contribution: <i style="color: royalblue; font-weight:bold; font-style:italic;">You did the operations in sequence -- ie. the second operation is performed on the result of the first, and so on, and this is done correctly in all cases. <b>However, the question states that each operation should be performed on the ORIGINAL tree</b>. So the deletion of 99 and 73 should have started from the original tree (not containing 72). Be careful of that. Similar questions you might see on the exam will state whether each operation should be done on the result of the previous, or whether each operation should be done from the same given starting point.</i></p>
+
+<ul>
+<li>Insert 72
+<pre>
+           35
+        /       \
+    14            63
+   /  \          /   \
+12      22    43       73
+            /    \    /   \
+           36    55  72   99
+</pre>
+</li>
+
+
+<li>delete 99, then delete 73
+<pre>
+           35                                             35
+        /       \                                      /     \            
+    14            63                               14          43
+   /  \          /                     =>         /  \        /  \        
+12      22     43                              12      22   36    63
+             /   \                                                / 
+            36    55                                             55
+</pre>
+
+<li>Insert 5, then insert 8
+<pre>
+              35                                           35
+           /       \                                    /       \
+       14            63                             14            63
+      /  \          /   \              =>          /  \          /   \
+   12      22    43       73                     8      22    43       73
+  /            /    \       \                  /   \        /    \       \
+ 5            36    55      99                5     12     36    55       99
+  \
+   8
+</pre>
+</li>
+
+<li>Insert 40
+<pre>
+              35                                           35                                        43
+           /       \                                    /       \                                 /       \
+       14            63                             14           43                            35           63
+      /  \          /   \              =>         /    \        /   \                =>      /    \        /   \
+   12      22    43       73                    12      22    36     63                    14      36    55     73
+               /    \       \                                   \    / \                  /   \      \            \
+              36    55      99                                   40 55 73                12   22      40           99
+                \                                                        \
+                 40                                                       99
+</pre>
+</li>
+
+<li>Delete 55
+<pre>
+          35
+       /      \
+    14         63
+   /  \       /   \
+ 12    22   43     73
+           /         \
+          36         99
+
+</pre>
+</li>
+
+</ul>
+
+<li>
+<p>
+(30 points) Design a set of classes for a graph data structure that meets the following requirements: </p>
+<ul type='disc'>
+<li>One should be able to associate any type of data item with vertices.</li>
+<li>One should be able to associate any type of data item with edges.</li>
+<li>The graph must have, at a minimum, the operations of:
+<ul type=square>
+<li> Create a new graph with N nodes</li>
+<li> Add an edge to the graph. </li>
+<li>Delete an edge from the graph.</li>
+<li>Determine if there is a path between two given nodes.</li>
+<li>Retrieve the item associated with a given edge.</li>
+<li>Retrieve the item associated with a given vertex.</li>
+</ul></li></ul>
+
+<p>You may define any number of classes that you wish. Give the java code for all class definitions, including instance variables, method headers, javadoc comments for method headers, but <b>not</b> method bodies (implementations). Don't forget to document any exceptions that a method might throw. <i>Do not make use of classes from lib280.</i>
+</p>
+
+<pre>
+class Pair&lt;F, V> {
+    public final F first;
+    public final V second;
+    public Pair(F first, V second) {
+        this.first = first;
+        this.second = second;
+    }
+}
+
+abstract class Vertex&lt;I> implements Comparable&lt;Vertex&lt;I>>{
+    private int index;
+    public Vertex(I data, int index) {this.index = index;}
+    
+    // Retrieve the item associated with a given vertex.
+    public abstract I getItem();
+    public int getIndex() { return index; }
+}
+
+abstract class Edge&lt;I, V extends Vertex&lt;I>> extends Pair&lt;V, V> {
+
+    public Edge(V v1, V v2, I data) {
+        super(v1, v2);
+    }
+
+    public abstract I getItem();
+}
+
+// an adjacency list representation of a graph
+class Graph&lt;I, V extends Vertex&lt;I>, E extends Edge&lt;I, V>> {
+
+    private List&lt;E>[] adj;
+    private int size;
+    
+    // Create a graph with N nodes
+    // @param N the size of the Graph
+    // @throws InvalidArgumentException
+    // @precond N must be >= 0
+    public Graph(int N) throws InvalidArgumentException {
+        if (size &lt;= 0) throw new RuntimeException();
+        size = N;
+        adj = new List[N];
+    }
+
+    // etc, etc
+}
+</pre>
+
+<p>Prof contribution: <i style="color: royalblue; font-weight:bold; font-style:italic;">I guess this would work. I'm not sure I agree with the use of abstract classes here.
+The user would have to define their own node classes just to use a graph, which isn't terribly friendly. Instead you can simply have an instance variable of type I and require the constructor accept an initializer.<br/><br/>
+
+Also, your definition of the Graph class requires that the object associated with an edge is the same type as the object associated with a vertex (both are required to be of type I) and they should be allowed to be different:</i>
+
+<pre>class Graph&lt;I, J, V extends Vertex&lt;I>, E extends Edge&lt;J, V>></pre></p>
+</li>
+
+<li>
+<p>Answer these questions about sorting:</p>
+<ol type='a'><li>(7 points) Which two sorting algorithms studied in class use the divide and conquer approach?
+Compare and contrast the ways that each of these sorting algorithms subdivide the problems and
+combine the subproblem solutions.</li>
+<li>(5 points) Give the pseudocode algorithm for bucket sort.</li></ol>
+</li>
+
+<li>
+<p>(20 points) Design classes for a data structure to keep track of course prerequisites at a university. A course may have any number of prerequisites, including none. A course is represented by it’s subject (e.g. CMPT) and it’s course number (e.g. 280). The class that stores the prerequisite information must provide the following operations:</p>
+<ul type=disc>
+<li>Add a new course (initially with zero prerequisites)</li>
+<li>Make course X as a prerequisite to course Y</li>
+<li>Retrieve a list of the prerequisites for a course, including those that are not a direct prerequisite.</li>
+</ul>
+<p>You may define any number of classes that you wish. You may make use of any classes from the java API and/or lib280 that seem appropriate. Give the java code for all class definitions, including instance variables, method headers. Comment on the purpose of each instance variable so that it is clear what each one is for. Javadoc comments for methods are not necessary</p>
+</li>
+</ol>
